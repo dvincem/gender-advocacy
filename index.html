@@ -1582,40 +1582,61 @@
         ...document.querySelectorAll('.action-steps li')
       ];
 
+      let lastScrollTop = 0;
+      const animatedElements = new WeakSet();
+
       function checkElementsInView() {
         const viewportHeight = window.innerHeight;
-        const scrollTop = document.querySelector('.main-wrapper').scrollTop;
+        const currentScrollTop = document.querySelector('.main-wrapper').scrollTop;
+        const scrollingDown = currentScrollTop > lastScrollTop;
         
         animatableElements.forEach(element => {
           const rect = element.getBoundingClientRect();
           
-          // Check if element is in viewport (with some margin)
-          const isInView = rect.top >= -100 && rect.top <= viewportHeight - 100;
+          // Check if element is entering viewport
+          const isInView = rect.top >= 0 && rect.top <= viewportHeight - 150;
           
-          if (isInView) {
-            // Add both ripple and bounce effects
-            if (!element.classList.contains('ripple-effect')) {
-              element.classList.add('ripple-effect');
-              element.classList.add('bounce-effect');
-              
-              // Remove effects after animations complete so they can be re-triggered
-              setTimeout(() => {
-                element.classList.remove('ripple-effect');
-                element.classList.remove('bounce-effect');
-              }, 1000);
+          if (isInView && !animatedElements.has(element)) {
+            // Mark as animated
+            animatedElements.add(element);
+            
+            // Set initial transform based on scroll direction
+            if (scrollingDown) {
+              element.style.transform = 'translateY(30px)';
+              element.style.opacity = '0';
+            } else {
+              element.style.transform = 'translateY(-30px)';
+              element.style.opacity = '0';
             }
+            
+            // Force reflow
+            element.offsetHeight;
+            
+            // Add both ripple and bounce effects
+            element.classList.add('ripple-effect');
+            element.classList.add('bounce-effect');
+            
+            // Animate to final position
+            requestAnimationFrame(() => {
+              element.style.transition = 'transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.6s ease';
+              element.style.transform = 'translateY(0)';
+              element.style.opacity = '1';
+            });
+            
+            // Clean up after animation
+            setTimeout(() => {
+              element.classList.remove('ripple-effect');
+              element.classList.remove('bounce-effect');
+              element.style.transition = '';
+            }, 1000);
           }
         });
+        
+        lastScrollTop = currentScrollTop;
       }
 
-      // Check on scroll with throttling for performance
-      let scrollTimeout;
-      document.querySelector('.main-wrapper').addEventListener('scroll', function() {
-        if (scrollTimeout) {
-          clearTimeout(scrollTimeout);
-        }
-        scrollTimeout = setTimeout(checkElementsInView, 50);
-      });
+      // Check on scroll - runs immediately for fluid animation
+      document.querySelector('.main-wrapper').addEventListener('scroll', checkElementsInView, { passive: true });
 
       // Initial check on page load
       setTimeout(checkElementsInView, 100);
@@ -1629,5 +1650,5 @@
       setupScrollRippleAnimations();
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b497881d26b8d0f',t:'MTc2Njg0NTM1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b497eedf01d8d0f',t:'MTc2Njg0NTYxNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
