@@ -30,7 +30,7 @@
     .main-wrapper {
       width: 100%;
       height: 100%;
-      overflow: auto;
+      overflow-auto;
       background: #ffffff;
     }
     
@@ -730,6 +730,67 @@
       .btn {
         width: 100%;
         max-width: 300px;
+      }
+
+      /* Mobile scroll animations - apply hover effects when centered */
+      .card.mobile-centered {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(139, 92, 246, 0.3);
+      }
+
+      .goal-item.mobile-centered {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+      }
+
+      .principle-card.mobile-centered {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+      }
+
+      .concept-box.mobile-centered {
+        border-color: #8b5cf6;
+        transform: scale(1.02);
+      }
+
+      .timeline-item.mobile-centered,
+      .why-gad li.mobile-centered {
+        transform: translateX(10px);
+        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+      }
+
+      .strategy-item.mobile-centered {
+        background: #e9d5ff;
+        transform: translateX(10px);
+      }
+
+      .benefit-card.mobile-centered {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+      }
+
+      .action-steps li.mobile-centered {
+        background: #f3e8ff;
+        transform: translateX(10px);
+        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.15);
+      }
+
+      .resource-card.mobile-centered {
+        transform: translateX(10px);
+        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+      }
+
+      .comparison-card.mobile-centered {
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+      }
+
+      /* Smooth transitions for mobile animations */
+      .card, .goal-item, .principle-card, .concept-box, 
+      .timeline-item, .why-gad li, .strategy-item, 
+      .challenge-card, .benefit-card, .action-category, 
+      .resource-card, .comparison-card, .action-steps li {
+        transition: all 0.3s ease;
       }
     }
   </style>
@@ -1528,6 +1589,59 @@
         mapToEditPanelValues
       });
     }
+
+    // Mobile scroll animations - activate cards when centered in viewport
+    function isMobileDevice() {
+      return window.innerWidth <= 768;
+    }
+
+    function isElementCentered(element) {
+      const rect = element.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const elementCenter = rect.top + rect.height / 2;
+      const viewportCenter = viewportHeight / 2;
+      
+      // Element is considered centered if its center is within 30% of viewport center
+      const threshold = viewportHeight * 0.3;
+      return Math.abs(elementCenter - viewportCenter) < threshold;
+    }
+
+    function updateCenteredElements() {
+      if (!isMobileDevice()) return;
+
+      // All interactive elements that should animate
+      const animatableElements = [
+        ...document.querySelectorAll('.card'),
+        ...document.querySelectorAll('.goal-item'),
+        ...document.querySelectorAll('.principle-card'),
+        ...document.querySelectorAll('.concept-box'),
+        ...document.querySelectorAll('.timeline-item'),
+        ...document.querySelectorAll('.why-gad li'),
+        ...document.querySelectorAll('.strategy-item'),
+        ...document.querySelectorAll('.challenge-card'),
+        ...document.querySelectorAll('.benefit-card'),
+        ...document.querySelectorAll('.action-category'),
+        ...document.querySelectorAll('.resource-card'),
+        ...document.querySelectorAll('.comparison-card'),
+        ...document.querySelectorAll('.action-steps li')
+      ];
+
+      animatableElements.forEach(element => {
+        if (isElementCentered(element)) {
+          element.classList.add('mobile-centered');
+        } else {
+          element.classList.remove('mobile-centered');
+        }
+      });
+    }
+
+    // Update on scroll and resize
+    if (isMobileDevice()) {
+      window.addEventListener('scroll', updateCenteredElements);
+      window.addEventListener('resize', updateCenteredElements);
+      // Initial check
+      updateCenteredElements();
+    }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b492da450138d0f',t:'MTc2Njg0MjI4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b495aded4738d0f',t:'MTc2Njg0NDEzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
