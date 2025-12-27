@@ -178,11 +178,8 @@
       border-left: 5px solid #8b5cf6;
       border-radius: 8px;
       transition: all 0.3s ease;
-    }
-    
-    .timeline-item:hover {
-      transform: translateX(10px);
-      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+      position: relative;
+      overflow: hidden;
     }
     
     .timeline-item strong {
@@ -208,11 +205,8 @@
       border-radius: 15px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
       transition: all 0.3s ease;
-    }
-    
-    .principle-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+      position: relative;
+      overflow: hidden;
     }
     
     .principle-card h4 {
@@ -240,11 +234,8 @@
       border-left: 5px solid #8b5cf6;
       border-radius: 8px;
       transition: all 0.3s ease;
-    }
-    
-    .why-gad li:hover {
-      transform: translateX(10px);
-      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+      position: relative;
+      overflow: hidden;
     }
     
     /* Key Issues Cards */
@@ -265,11 +256,8 @@
       border-radius: 15px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
       transition: all 0.3s ease;
-    }
-    
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 35px rgba(139, 92, 246, 0.3);
+      position: relative;
+      overflow: hidden;
     }
     
     .card-icon {
@@ -353,6 +341,8 @@
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
     }
     
     .comparison-card h4 {
@@ -380,11 +370,8 @@
       border-radius: 12px;
       border: 2px solid #e9d5ff;
       transition: all 0.3s ease;
-    }
-    
-    .concept-box:hover {
-      border-color: #8b5cf6;
-      transform: scale(1.02);
+      position: relative;
+      overflow: hidden;
     }
     
     .concept-box h4 {
@@ -411,11 +398,8 @@
       background: white;
       border-radius: 15px;
       transition: all 0.3s ease;
-    }
-    
-    .goal-item:hover {
-      transform: scale(1.05);
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+      position: relative;
+      overflow: hidden;
     }
     
     .goal-icon {
@@ -452,11 +436,8 @@
       margin: 20px 0;
       border-radius: 12px;
       transition: all 0.3s ease;
-    }
-    
-    .strategy-item:hover {
-      background: #e9d5ff;
-      transform: translateX(10px);
+      position: relative;
+      overflow: hidden;
     }
     
     .strategy-item h4 {
@@ -482,6 +463,8 @@
       padding: 25px;
       border-radius: 12px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
     }
     
     .challenge-card h4 {
@@ -508,11 +491,8 @@
       border-radius: 12px;
       text-align: center;
       transition: all 0.3s ease;
-    }
-    
-    .benefit-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+      position: relative;
+      overflow: hidden;
     }
     
     .benefit-icon {
@@ -545,12 +525,8 @@
       font-weight: 500;
       transition: all 0.3s ease;
       box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
-    
-    .action-steps li:hover {
-      background: #f3e8ff;
-      transform: translateX(10px);
-      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.15);
+      position: relative;
+      overflow: hidden;
     }
     
     .action-details {
@@ -564,6 +540,8 @@
       margin: 25px 0;
       border-radius: 15px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
     }
     
     .action-category h4 {
@@ -607,11 +585,8 @@
       border-radius: 12px;
       border-left: 5px solid #8b5cf6;
       transition: all 0.3s ease;
-    }
-    
-    .resource-card:hover {
-      transform: translateX(10px);
-      box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
+      position: relative;
+      overflow: hidden;
     }
     
     .resource-card h4 {
@@ -696,6 +671,44 @@
       }
     }
     
+    @keyframes ripple {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 0;
+      }
+    }
+    
+    .ripple-effect {
+      position: relative;
+    }
+    
+    .ripple-effect::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, rgba(139, 92, 246, 0.3) 30%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      animation: ripple 1s ease-out forwards;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .ripple-effect > * {
+      position: relative;
+      z-index: 1;
+    }
+    
     /* Responsive Design */
     @media (max-width: 768px) {
       .hero h1 {
@@ -730,67 +743,6 @@
       .btn {
         width: 100%;
         max-width: 300px;
-      }
-
-      /* Mobile scroll animations - apply hover effects when centered */
-      .card.mobile-centered {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 35px rgba(139, 92, 246, 0.3);
-      }
-
-      .goal-item.mobile-centered {
-        transform: scale(1.05);
-        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
-      }
-
-      .principle-card.mobile-centered {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
-      }
-
-      .concept-box.mobile-centered {
-        border-color: #8b5cf6;
-        transform: scale(1.02);
-      }
-
-      .timeline-item.mobile-centered,
-      .why-gad li.mobile-centered {
-        transform: translateX(10px);
-        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
-      }
-
-      .strategy-item.mobile-centered {
-        background: #e9d5ff;
-        transform: translateX(10px);
-      }
-
-      .benefit-card.mobile-centered {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
-      }
-
-      .action-steps li.mobile-centered {
-        background: #f3e8ff;
-        transform: translateX(10px);
-        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.15);
-      }
-
-      .resource-card.mobile-centered {
-        transform: translateX(10px);
-        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.2);
-      }
-
-      .comparison-card.mobile-centered {
-        transform: scale(1.02);
-        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
-      }
-
-      /* Smooth transitions for mobile animations */
-      .card, .goal-item, .principle-card, .concept-box, 
-      .timeline-item, .why-gad li, .strategy-item, 
-      .challenge-card, .benefit-card, .action-category, 
-      .resource-card, .comparison-card, .action-steps li {
-        transition: all 0.3s ease;
       }
     }
   </style>
@@ -1595,10 +1547,8 @@
       return window.innerWidth <= 768;
     }
 
-    function setupMobileScrollAnimations() {
-      if (!isMobileDevice()) return;
-
-      // All interactive elements that should animate on scroll
+    function setupScrollRippleAnimations() {
+      // All interactive elements that should ripple on scroll
       const animatableElements = [
         ...document.querySelectorAll('.card'),
         ...document.querySelectorAll('.goal-item'),
@@ -1615,23 +1565,30 @@
         ...document.querySelectorAll('.action-steps li')
       ];
 
+      // Track which elements have already been animated
+      const animatedElements = new Set();
+
       function checkElementsInView() {
         const viewportHeight = window.innerHeight;
-        const viewportCenter = viewportHeight / 2;
+        const scrollTop = document.querySelector('.main-wrapper').scrollTop;
         
         animatableElements.forEach(element => {
           const rect = element.getBoundingClientRect();
-          const elementCenter = rect.top + (rect.height / 2);
+          const elementTop = rect.top + scrollTop;
+          const elementMiddle = elementTop + (rect.height / 2);
           
-          // Calculate how close the element is to the center of the viewport
-          const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
-          const threshold = viewportHeight * 0.3; // 30% of viewport height
+          // Check if element middle is in viewport
+          const isInView = rect.top >= 0 && rect.top <= viewportHeight * 0.8;
           
-          // Add class if element is near center
-          if (distanceFromCenter < threshold) {
-            element.classList.add('mobile-centered');
-          } else {
-            element.classList.remove('mobile-centered');
+          // Only animate once when element enters view
+          if (isInView && !animatedElements.has(element)) {
+            animatedElements.add(element);
+            element.classList.add('ripple-effect');
+            
+            // Remove the ripple class after animation completes
+            setTimeout(() => {
+              element.classList.remove('ripple-effect');
+            }, 800);
           }
         });
       }
@@ -1650,12 +1607,12 @@
     }
 
     // Setup scroll animations on load
-    setupMobileScrollAnimations();
+    setupScrollRippleAnimations();
     
     // Re-setup on resize
     window.addEventListener('resize', function() {
-      setupMobileScrollAnimations();
+      setupScrollRippleAnimations();
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b49688eb3048d0f',t:'MTc2Njg0NDcwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b49715ee5878d0f',t:'MTc2Njg0NTA2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
