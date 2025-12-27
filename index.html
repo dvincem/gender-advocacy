@@ -1590,15 +1590,26 @@
       });
     }
 
-    // Mobile tap/press animations - activate cards on touch
+    // Mobile scroll animations - activate cards when centered in viewport
     function isMobileDevice() {
       return window.innerWidth <= 768;
     }
 
-    function setupMobileTapAnimations() {
+    function isElementCentered(element) {
+      const rect = element.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const elementCenter = rect.top + rect.height / 2;
+      const viewportCenter = viewportHeight / 2;
+      
+      // Element is considered centered if its center is within 30% of viewport center
+      const threshold = viewportHeight * 0.3;
+      return Math.abs(elementCenter - viewportCenter) < threshold;
+    }
+
+    function updateCenteredElements() {
       if (!isMobileDevice()) return;
 
-      // All interactive elements that should animate on tap
+      // All interactive elements that should animate
       const animatableElements = [
         ...document.querySelectorAll('.card'),
         ...document.querySelectorAll('.goal-item'),
@@ -1616,29 +1627,21 @@
       ];
 
       animatableElements.forEach(element => {
-        // Add touch event listeners
-        element.addEventListener('touchstart', function() {
-          this.classList.add('mobile-centered');
-        });
-
-        element.addEventListener('touchend', function() {
-          // Keep animation for a moment then remove
-          setTimeout(() => {
-            this.classList.remove('mobile-centered');
-          }, 300);
-        });
-
-        element.addEventListener('touchcancel', function() {
-          this.classList.remove('mobile-centered');
-        });
+        if (isElementCentered(element)) {
+          element.classList.add('mobile-centered');
+        } else {
+          element.classList.remove('mobile-centered');
+        }
       });
     }
 
-    // Setup tap animations on load
-    setupMobileTapAnimations();
-    
-    // Re-setup on resize in case elements are added dynamically
-    window.addEventListener('resize', setupMobileTapAnimations);
+    // Update on scroll and resize
+    if (isMobileDevice()) {
+      window.addEventListener('scroll', updateCenteredElements);
+      window.addEventListener('resize', updateCenteredElements);
+      // Initial check
+      updateCenteredElements();
+    }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b49606946478d0f',t:'MTc2Njg0NDM2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b495aded4738d0f',t:'MTc2Njg0NDEzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
