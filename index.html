@@ -1590,26 +1590,15 @@
       });
     }
 
-    // Mobile scroll animations - activate cards when centered in viewport
+    // Mobile scroll animations - animate elements when they come into view
     function isMobileDevice() {
       return window.innerWidth <= 768;
     }
 
-    function isElementCentered(element) {
-      const rect = element.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const elementCenter = rect.top + rect.height / 2;
-      const viewportCenter = viewportHeight / 2;
-      
-      // Element is considered centered if its center is within 30% of viewport center
-      const threshold = viewportHeight * 0.3;
-      return Math.abs(elementCenter - viewportCenter) < threshold;
-    }
-
-    function updateCenteredElements() {
+    function setupMobileScrollAnimations() {
       if (!isMobileDevice()) return;
 
-      // All interactive elements that should animate
+      // All interactive elements that should animate on scroll
       const animatableElements = [
         ...document.querySelectorAll('.card'),
         ...document.querySelectorAll('.goal-item'),
@@ -1626,22 +1615,47 @@
         ...document.querySelectorAll('.action-steps li')
       ];
 
-      animatableElements.forEach(element => {
-        if (isElementCentered(element)) {
-          element.classList.add('mobile-centered');
-        } else {
-          element.classList.remove('mobile-centered');
+      function checkElementsInView() {
+        const viewportHeight = window.innerHeight;
+        const viewportCenter = viewportHeight / 2;
+        
+        animatableElements.forEach(element => {
+          const rect = element.getBoundingClientRect();
+          const elementCenter = rect.top + (rect.height / 2);
+          
+          // Calculate how close the element is to the center of the viewport
+          const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
+          const threshold = viewportHeight * 0.3; // 30% of viewport height
+          
+          // Add class if element is near center
+          if (distanceFromCenter < threshold) {
+            element.classList.add('mobile-centered');
+          } else {
+            element.classList.remove('mobile-centered');
+          }
+        });
+      }
+
+      // Check on scroll with throttling for performance
+      let scrollTimeout;
+      document.querySelector('.main-wrapper').addEventListener('scroll', function() {
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
         }
+        scrollTimeout = setTimeout(checkElementsInView, 50);
       });
+
+      // Initial check
+      checkElementsInView();
     }
 
-    // Update on scroll and resize
-    if (isMobileDevice()) {
-      window.addEventListener('scroll', updateCenteredElements);
-      window.addEventListener('resize', updateCenteredElements);
-      // Initial check
-      updateCenteredElements();
-    }
+    // Setup scroll animations on load
+    setupMobileScrollAnimations();
+    
+    // Re-setup on resize
+    window.addEventListener('resize', function() {
+      setupMobileScrollAnimations();
+    });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b495aded4738d0f',t:'MTc2Njg0NDEzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b49688eb3048d0f',t:'MTc2Njg0NDcwMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
