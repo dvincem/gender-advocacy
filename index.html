@@ -41,10 +41,11 @@
       background-repeat: no-repeat;
       background-position: center center;
       background-size: cover;
+      /* Darken background with a semi-opaque black overlay */
       background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("img/hero-bg.jpg");
       background-blend-mode: overlay;
       /* Fallback color if the image is missing */
-      background-color: #8b5cf6;
+      background-color: #19191a;
       color: white;
       padding: 5% 5%;
       text-align: center;
@@ -76,6 +77,7 @@
       margin: 0 auto 4%;
       line-height: 1.8;
       opacity: 0.9;
+      color: #faf5ff;
       animation: fadeInUp 1.4s ease-out;
     }
     
@@ -605,7 +607,15 @@
     
     /* Call to Action */
     .cta {
-      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+      /* Use a relative path (no leading slash) so the image loads when opened locally or from the same site */
+      background-image: url("img/cta-bg.jpg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      /* Darken background with a semi-opaque black overlay */
+      background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("img/cta-bg.jpg");
+      background-blend-mode: overlay;
+      background-color: #19191a;
       color: white;
       text-align: center;
       padding: 5% 5%;
@@ -1333,7 +1343,7 @@
    </section><!-- Footer -->
    <footer>
     <p><strong>Academic Advocacy Website</strong></p>
-    <p class="institution">Cavite State University �� Imus Campus</p>
+    <p class="institution">Cavite State University - Imus Campus</p>
     <p>Department of Social Sciences and Humanities</p>
     <p style="margin-top: 20px; opacity: 0.7;">Created for educational purposes only</p>
    </footer>
@@ -1664,6 +1674,4 @@
     });
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b49874806c18d0f',t:'MTc2Njg0NTk2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
 </html>
-
